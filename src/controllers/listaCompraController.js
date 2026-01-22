@@ -32,7 +32,7 @@ exports.create = async (req, res) => {
     const roteiro = await gerarRoteiro(produtos);
     // Salva a lista de compra no banco
     const novaLista = new ListaCompra({
-      visitante: req.user.id,
+      visitante: req.user?.id || null,
       produtos,
       roteiro: roteiro.map(r => r.box._id)
     });
