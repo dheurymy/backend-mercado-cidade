@@ -24,6 +24,8 @@ exports.list = async (req, res) => {
 
 exports.get = async (req, res) => {
   try {
+    // Incrementa contador de acessos
+    await Box.findByIdAndUpdate(req.params.id, { $inc: { acessos: 1 } });
     const box = await Box.findById(req.params.id).populate('tipoEstabelecimento feirante produtos');
     if (!box) return res.status(404).json({ message: 'Box não encontrado.' });
     res.json(box);

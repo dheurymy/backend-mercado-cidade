@@ -8,7 +8,8 @@ const boxSchema = new mongoose.Schema({
   feirante: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   produtos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Produto' }],
   criadoEm: { type: Date, default: Date.now },
-  ativo: { type: Boolean, default: true }
+  ativo: { type: Boolean, default: true },
+  acessos: { type: Number, default: 0 } // contador de acessos
 });
 
 module.exports = mongoose.model('Box', boxSchema);

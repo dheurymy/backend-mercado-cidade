@@ -14,9 +14,21 @@ exports.create = async (req, res) => {
   }
 };
 
+// Listar produtos e, se houver busca, incrementar contador de buscas
 exports.list = async (req, res) => {
   try {
-    const produtos = await Produto.find().populate('categoria box');
+    const { busca } = req.query;
+    let produtos = await Produto.find().populate('categoria box');
+    if (busca) {
+      const termo = busca.toLowerCase();
+      const filtrados = produtos.filter(p =>
+        p.nome.toLowerCase().includes(termo) ||
+        (p.descricao && p.descricao.toLowerCase().includes(termo))
+      );
+      // Incrementa contador de buscas
+      await Promise.all(filtrados.map(p => Produto.findByIdAndUpdate(p._id, { $inc: { buscas: 1 } })));
+      produtos = filtrados;
+    }
     res.json(produtos);
   } catch (err) {
     res.status(500).json({ message: 'Erro ao listar produtos.', error: err.message });

@@ -8,7 +8,8 @@ const produtoSchema = new mongoose.Schema({
   categoria: { type: mongoose.Schema.Types.ObjectId, ref: 'Categoria', required: true },
   box: { type: mongoose.Schema.Types.ObjectId, ref: 'Box', required: true },
   disponivel: { type: Boolean, default: true },
-  criadoEm: { type: Date, default: Date.now }
+  criadoEm: { type: Date, default: Date.now },
+  buscas: { type: Number, default: 0 } // contador de buscas
 });
 
 module.exports = mongoose.model('Produto', produtoSchema);
