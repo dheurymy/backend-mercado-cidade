@@ -18,15 +18,13 @@ async function gerarRoteiro(produtos) {
 
 exports.create = async (req, res) => {
   try {
-    const visitante = req.user.id;
     const { produtos } = req.body;
     if (!produtos || !Array.isArray(produtos) || produtos.length === 0) {
       return res.status(400).json({ message: 'Lista de produtos obrigatória.' });
     }
     const roteiro = await gerarRoteiro(produtos);
-    const lista = new ListaCompra({ visitante, produtos, roteiro: roteiro.map(r => r.box._id) });
-    await lista.save();
-    res.status(201).json({ lista, roteiro });
+    // Não salva no banco, apenas retorna o roteiro gerado
+    res.status(201).json({ roteiro });
   } catch (err) {
     res.status(500).json({ message: 'Erro ao criar lista de compras.', error: err.message });
   }
