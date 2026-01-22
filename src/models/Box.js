@@ -9,7 +9,8 @@ const boxSchema = new mongoose.Schema({
   produtos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Produto' }],
   criadoEm: { type: Date, default: Date.now },
   ativo: { type: Boolean, default: true },
-  acessos: { type: Number, default: 0 } // contador de acessos
+  acessos: { type: Number, default: 0 }, // contador de acessos
+  adicionadosEmListas: { type: Number, default: 0 } // vezes produtos do box adicionados à lista
 });
 
 module.exports = mongoose.model('Box', boxSchema);

@@ -22,6 +22,13 @@ exports.create = async (req, res) => {
     if (!produtos || !Array.isArray(produtos) || produtos.length === 0) {
       return res.status(400).json({ message: 'Lista de produtos obrigatória.' });
     }
+    // Incrementa contadores de produtos e boxes
+    for (const item of produtos) {
+      const produto = await Produto.findByIdAndUpdate(item.produto, { $inc: { adicionadosEmListas: 1 } });
+      if (produto && produto.box) {
+        await Box.findByIdAndUpdate(produto.box, { $inc: { adicionadosEmListas: 1 } });
+      }
+    }
     const roteiro = await gerarRoteiro(produtos);
     // Não salva no banco, apenas retorna o roteiro gerado
     res.status(201).json({ roteiro });
