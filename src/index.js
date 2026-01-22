@@ -16,6 +16,10 @@ app.use('/api/boxes', require('./routes/boxes'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/categorias', require('./routes/categorias'));
 app.use('/api/shopping-list', require('./routes/shoppingList'));
+app.use('/api/upload', require('./routes/upload'));
+// Servir arquivos estáticos da pasta uploads
+const path = require('path');
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Rotas (a serem implementadas)
 // app.use('/api/auth', require('./routes/auth'));
