@@ -17,6 +17,7 @@ app.use('/api/products', require('./routes/products'));
 app.use('/api/categorias', require('./routes/categorias'));
 app.use('/api/shopping-list', require('./routes/shoppingList'));
 app.use('/api/upload', require('./routes/upload'));
+app.use('/api/dashboard', require('./routes/dashboard'));
 
 // Rotas (a serem implementadas)
 // app.use('/api/auth', require('./routes/auth'));

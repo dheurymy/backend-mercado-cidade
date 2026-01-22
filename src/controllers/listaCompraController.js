@@ -30,8 +30,14 @@ exports.create = async (req, res) => {
       }
     }
     const roteiro = await gerarRoteiro(produtos);
-    // Não salva no banco, apenas retorna o roteiro gerado
-    res.status(201).json({ roteiro });
+    // Salva a lista de compra no banco
+    const novaLista = new ListaCompra({
+      visitante: req.user.id,
+      produtos,
+      roteiro: roteiro.map(r => r.box._id)
+    });
+    await novaLista.save();
+    res.status(201).json({ lista: novaLista, roteiro });
   } catch (err) {
     res.status(500).json({ message: 'Erro ao criar lista de compras.', error: err.message });
   }
